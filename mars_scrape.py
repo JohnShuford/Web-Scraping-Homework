@@ -36,7 +36,6 @@ def scrape():
     news_p = pargs[0].text
 
     #quit the running browser
-    browser.quit()
 
     #url of the page to be scraped
     url2 = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -54,9 +53,8 @@ def scrape():
 
     #get the image url
     img_url = soup.find('article', class_='carousel_item')['style'].replace('background-image: url(','').replace(');','')[1:-1]
-
+    img_url_full = 'https://www.jpl.nasa.gov' + img_url
     #quit the running browser
-    browser.quit()
 
     #url of the page to be scraped
     url3 = 'https://space-facts.com/mars/'
@@ -66,9 +64,10 @@ def scrape():
 
     #creat a dataframe from the scrape
     df = table[0]
-    df.head(5)
 
     #get the HTML table string
+    df.columns = ['Description', 'Mars']
+    df = df.set_index('Description')
     html_table = df.to_html()
 
     #url of the page to be scraped
@@ -117,7 +116,7 @@ def scrape():
     mars_dict = {
         'news_title': news_title,
         'news_paragraph': news_p,
-        'featured_img': img_url,
+        'featured_img': img_url_full,
         'table': html_table,
         'hemispheres' : hemisphere_image_urls
     }

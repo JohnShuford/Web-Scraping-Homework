@@ -18,6 +18,14 @@ def home():
     # Return template and data
     return render_template("index.html", mars_dict = mars_dict)
 
+@app.route('/hemispheres')
+def picture():
+
+    mars_dict = mongo.db.mars_dict.find_one()
+
+    return render_template('hemispheres.html', mars_dict = mars_dict)
+
+
 
 # Route that will trigger the scrape function
 @app.route("/scrape")
